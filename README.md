@@ -12,7 +12,7 @@
 Download all the file to your local <br>
 Move into the downloaded folder where the Dockerfile is present. <br></p>
 <p><g-emoji class="g-emoji" alias="exclamation" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/2757.png">💻❗️</g-emoji> To build the image from the Dockefile, execute <code>docker build</code> as follows.</p>
-<p><g-emoji class="g-emoji" alias="exclamation" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/2757.png">💻❗️</g-emoji> <code>Run : docker build -t **{nameofyourImage}** .</code>.</p>
+<p><g-emoji class="g-emoji" alias="exclamation" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/2757.png">💻❗️</g-emoji> <code>$ docker build -t **{nameofyourImage}**</code></p>
 
   
 <p><g-emoji class="g-emoji" alias="exclamation" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/2757.png">🏁</g-emoji> When executing <code>docker run</code> for an image with Chrome please either mount <code>-v /dev/shm:/dev/shm</code> or use the flag <code>--shm-size=2g</code> to use the host's shared memory.</p>

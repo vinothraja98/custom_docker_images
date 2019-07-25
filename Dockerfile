@@ -261,6 +261,7 @@ RUN if [ -z "$CHROME_DRIVER_VERSION" ]; \
   && sudo ln -fs /opt/selenium/chromedriver-$CHROME_DRIVER_VERSION /usr/bin/chromedriver
 
 COPY generate_config /opt/bin/generate_config
+RUN chmod 755 /opt/bin/generate_config
 
 # Generating a default config during build time
 RUN /opt/bin/generate_config > /opt/selenium/config.json

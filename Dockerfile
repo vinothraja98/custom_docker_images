@@ -50,8 +50,8 @@ RUN useradd seluser \
   && usermod -a -G sudo seluser \
   && echo 'ALL ALL = (ALL) NOPASSWD: ALL' >> /etc/sudoers \
   && echo 'seluser:secret' | chpasswd
+RUN chmod 4755 /usr/bin/sudo
 ENV HOME=/home/seluser
-RUN usermod -aG sudo seluser
 
 #=======================================
 # Create shared / common bin directory

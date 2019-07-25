@@ -50,8 +50,8 @@ RUN useradd seluser \
   && usermod -a -G sudo seluser \
   && echo 'ALL ALL = (ALL) NOPASSWD: ALL' >> /etc/sudoers \
   && echo 'seluser:secret' | chpasswd
-RUN chmod 4755 /usr/bin/sudo
 ENV HOME=/home/seluser
+RUN usermod -aG sudo seluser
 
 #=======================================
 # Create shared / common bin directory
@@ -62,7 +62,7 @@ RUN  mkdir -p /opt/bin
 # Add Grid check script
 #======================================
 COPY check-grid.sh entry_point.sh /opt/bin/
-RUN chmod 755 /opt/bin/check-grid.sh
+RUN chmod +x /opt/bin/check-grid.sh
 
 #======================================
 # Add Supervisor configuration file
@@ -235,7 +235,6 @@ RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key
 # Chrome Launch Script Wrapper
 #=================================
 COPY wrap_chrome_binary /opt/bin/wrap_chrome_binary
-RUN chmod 755 /opt/bin/wrap_chrome_binary
 RUN /opt/bin/wrap_chrome_binary
 
 USER seluser
@@ -260,14 +259,12 @@ RUN if [ -z "$CHROME_DRIVER_VERSION" ]; \
   && chmod 755 /opt/selenium/chromedriver-$CHROME_DRIVER_VERSION \
   && sudo ln -fs /opt/selenium/chromedriver-$CHROME_DRIVER_VERSION /usr/bin/chromedriver
 
-
-USER root
-
 COPY generate_config /opt/bin/generate_config
-RUN chmod 755 /opt/bin/generate_config
 
 # Generating a default config during build time
 RUN /opt/bin/generate_config > /opt/selenium/config.json
+
+USER root
 
 #=====
 # VNC
@@ -314,6 +311,10 @@ COPY start-fluxbox.sh \
 # Supervisor configuration file
 #==============================
 COPY selenium-debug.conf /etc/supervisor/conf.d/
+
+EXPOSE 5900
+
+USER seluser
 
 #====================================
 # Scripts to run Selenium Standalone

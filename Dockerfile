@@ -260,13 +260,14 @@ RUN if [ -z "$CHROME_DRIVER_VERSION" ]; \
   && chmod 755 /opt/selenium/chromedriver-$CHROME_DRIVER_VERSION \
   && sudo ln -fs /opt/selenium/chromedriver-$CHROME_DRIVER_VERSION /usr/bin/chromedriver
 
+
+USER root
+
 COPY generate_config /opt/bin/generate_config
 RUN chmod 755 /opt/bin/generate_config
 
 # Generating a default config during build time
 RUN /opt/bin/generate_config > /opt/selenium/config.json
-
-USER root
 
 #=====
 # VNC
@@ -313,10 +314,6 @@ COPY start-fluxbox.sh \
 # Supervisor configuration file
 #==============================
 COPY selenium-debug.conf /etc/supervisor/conf.d/
-
-EXPOSE 5900
-
-USER seluser
 
 #====================================
 # Scripts to run Selenium Standalone

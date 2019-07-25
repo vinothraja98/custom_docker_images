@@ -62,7 +62,7 @@ RUN  mkdir -p /opt/bin
 # Add Grid check script
 #======================================
 COPY check-grid.sh entry_point.sh /opt/bin/
-RUN chmod +x /opt/bin/check-grid.sh
+RUN chmod 755 /opt/bin/check-grid.sh
 
 #======================================
 # Add Supervisor configuration file
